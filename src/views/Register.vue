@@ -1,4 +1,5 @@
 <template>
+    <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="main-panel">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -10,7 +11,7 @@
                 </div>
                 <h4>Selamat datang!</h4>
                 <h6 class="font-weight-light">Daftar untuk menggunakan aplikasi daily scrum.</h6>
-                <form class="pt-3" method="post" action="#">
+                <form v-on:submit.prevent="Register" class="pt-3" method="post">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend bg-transparent">
@@ -18,7 +19,7 @@
                           <i class="mdi mdi-account-outline text-primary"></i>
                         </span>
                       </div>
-                      <input type="text" class="form-control form-control-lg border-left-0" id="firstname" name="firstname" placeholder="First Name" required>
+                      <input v-model="firstname" type="text" class="form-control form-control-lg border-left-0" id="firstname" name="firstname" placeholder="First Name" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -28,7 +29,7 @@
                           <i class="mdi mdi-account-outline text-primary"></i>
                         </span>
                       </div>
-                      <input type="text" class="form-control form-control-lg border-left-0" id="lastname" name="lastname" placeholder="Last Name" required>
+                      <input v-model="lastname" type="text" class="form-control form-control-lg border-left-0" id="lastname" name="lastname" placeholder="Last Name" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -38,7 +39,7 @@
                           <i class="mdi mdi-message-outline text-primary"></i>
                         </span>
                       </div>
-                      <input type="email" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="E-Mail" required>
+                      <input v-model="email" type="email" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="E-Mail" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -48,7 +49,7 @@
                           <i class="mdi mdi-lock-outline text-primary"></i>
                         </span>
                       </div>
-                      <input type="password" class="form-control form-control-lg border-left-0" name="password" id="password" placeholder="New Password" required>                        
+                      <input v-model="password" type="password" class="form-control form-control-lg border-left-0" name="password" id="password" placeholder="New Password" required>                        
                     </div>
                   </div>
                   <div class="form-group">
@@ -58,7 +59,7 @@
                           <i class="mdi mdi-lock-outline text-primary"></i>
                         </span>
                       </div>
-                      <input type="password" class="form-control form-control-lg border-left-0" name="password_verify" id="password_verify" placeholder="Retype Your New Password" required>                        
+                      <input v-model="password_verify" type="password" class="form-control form-control-lg border-left-0" name="password_verify" id="password_verify" placeholder="Retype Your New Password" required>                        
                     </div>
                   </div>
                   <div class="my-3">
@@ -73,5 +74,37 @@
       <!-- content-wrapper ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  <!-- plugins:js -->
+  </div>
 </template>
+
+<script>
+export default {
+    data() {
+      return {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        password_verify: ''
+      }
+    },
+    methods: {
+        Register: function(){
+            let conf = { headers: { "Authorization" : 'Bearer ' + this.key } };
+            this.$bvToast.show("loadingToast");
+            let form = new FormData();
+            form.append("id", this.id);
+            form.append("firstname", this.firstname);
+            form.append("lastname", this.lastname);
+            form.append("email", this.email);
+            form.append("password", this.password);
+            form.append("password_verify", this.password_verify);
+            this.axios.post("/register", form, conf)
+            .then(() => this.$router.push('/login'))
+            .catch(error => {
+              console.log(error);
+            }); 
+        }
+    }
+}
+</script>

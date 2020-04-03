@@ -38,11 +38,11 @@ export default new Vuex.Store({
 	            .then(response => {
 	                const token = response.data.token
 	                const logged = response.data.logged
-	                localStorage.setItem('Authorization', token)
-	                // Add the following line:
+					localStorage.setItem('Authorization', token)
+					  // Add the following line:
 	                axios.defaults.headers.common['Authorization'] = token
 					commit('auth_success', token, logged)
-					// get detail user
+					// detail user
 					let conf = {headers : {"Authorization" : "Bearer " + token}};
 					axios.get("/login/check", conf)
 					.then (response => {

@@ -10,7 +10,7 @@
                 </div>
                 <h4>Selamat datang!</h4>
                 <h6 class="font-weight-light">Login untuk mengakses aplikasi daily scrum.</h6>
-                <form class="pt-3" method="post" action="#">
+                <form class="pt-3" method="post" action="#" v-on:submit.prevent="Login">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend bg-transparent">
@@ -18,7 +18,7 @@
                         <i class="mdi mdi-account-outline text-primary"></i>
                       </span>
                     </div>
-                    <input type="email" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="E-Mail" required>
+                    <input v-model="email" type="email" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="E-Mail" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -28,7 +28,7 @@
                         <i class="mdi mdi-lock-outline text-primary"></i>
                       </span>
                     </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" name="password" id="password" placeholder="Kata Sandi" required>                        
+                    <input v-model="password" type="password" class="form-control form-control-lg border-left-0" name="password" id="password" placeholder="Kata Sandi" required>                        
                   </div>
                 </div>
                 <div class="my-3">
@@ -49,6 +49,20 @@
 
 <script>
 export default {
-    
+    data() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+        Login: function(){
+            let email = this.email 
+            let password = this.password
+            this.$store.dispatch('login', { email, password })
+            .then(() => this.$router.push('/dailyscrum'))
+            .catch(err => console.log(err))
+        }
+    }
 }
 </script>

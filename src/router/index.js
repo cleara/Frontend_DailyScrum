@@ -8,8 +8,7 @@ import Navbar from '../views/layouts/Navbar.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/login',
+  { path: '/login',
     name: 'login',
     components: {default: Login}
   },
@@ -35,17 +34,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: routes
 })
-
-// router.beforeEach((to, from, next) => {
-//   if(to.matched.some(record => record.meta.requiresAuth)) {
-//     if (store.getters.isLoggedIn) {
-//       next()
-//       return
-//     }
-//     next('/login') 
-//   } else {
-//     next() 
-//   }
-// })
 
 export default router
