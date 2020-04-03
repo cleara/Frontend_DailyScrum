@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import DailyScrum from '../views/DailyScrum.vue'
 import Navbar from '../views/layouts/Navbar.vue'
+import Footer from '../views/layouts/Footer.vue'
 
 Vue.use(VueRouter)
 
@@ -20,14 +21,13 @@ const routes = [
   {
     path: '/dailyscrum',
     name: 'dailyscrum',
-    components:  {default:DailyScrum ,header: Navbar},
+    components:  {default:DailyScrum, header: Navbar, footer:Footer},
     meta: { 
       requiresAuth: true
   }
 }
  
 ]
-
 
 const router = new VueRouter({
   mode: 'history',
